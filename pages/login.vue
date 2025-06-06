@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUser } from "../composables/useUser";
+
+const username = ref("");
+const password = ref("");
+const rememberMe = ref(false);
+const error = ref("");
+const success = ref("");
+const router = useRouter();
+const { setUser } = useUser();
+
+const onLogin = () => {
+  error.value = "";
+  success.value = "";
+  // Dummy authentication
+  if (username.value === "magnate" && password.value === "123") {
+    setUser({
+      name: username.value,
+      avatar: "/assets/images/users/avatar-1.jpg",
+      logged: true,
+    });
+    success.value = "Амжилттай нэвтэрлээ!";
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 1000);
+  } else {
+    error.value = "Нэвтрэх нэр эсвэл нууц үг буруу!";
+  }
+};
+
+// definePageMeta({
+//     Layout: "empty"
+// });
+
+</script>
+
+
 <template>
   <div class="container-xxl">
     <div class="row vh-100 d-flex justify-content-center">
@@ -95,36 +134,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useUser } from "../composables/useUser";
-
-const username = ref("");
-const password = ref("");
-const rememberMe = ref(false);
-const error = ref("");
-const success = ref("");
-const router = useRouter();
-const { setUser } = useUser();
-
-const onLogin = () => {
-  error.value = "";
-  success.value = "";
-  // Dummy authentication
-  if (username.value === "magnate" && password.value === "123") {
-    setUser({
-      name: username.value,
-      avatar: "/assets/images/users/avatar-1.jpg",
-      logged: true,
-    });
-    success.value = "Амжилттай нэвтэрлээ!";
-    setTimeout(() => {
-      router.push("/dashboard");
-    }, 1000);
-  } else {
-    error.value = "Нэвтрэх нэр эсвэл нууц үг буруу!";
-  }
-};
-</script>
